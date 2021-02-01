@@ -93,7 +93,13 @@ function setSkills(data) {
   const cssContainer = document.querySelector("#css-container");
   const jsContainer = document.querySelector("#js-container");
 
-  for (let index = 0; index < data.other.skills.html; index++) {
-    htmlContainer.children.classList.add("accomplished");
+  for (let index = 0; index < data[0].other.skills.html; index++) {
+    htmlContainer.children[index].classList.add("accomplished");
+  }
+  for (let index = 0; index < data[0].other.skills.css; index++) {
+    cssContainer.children[index].classList.add("accomplished");
+  }
+  for (let index = 0; index < data[0].other.skills.js; index++) {
+    jsContainer.children[index].classList.add("accomplished");
   }
 }
