@@ -1,11 +1,16 @@
 const path = `https://601803ee971d850017a3f625.mockapi.io/members`;
-
-async function main() {
+document.getElementById("menu").addEventListener("click", (e) => {
+  const selectedName = e.path[0].innerText;
+  main(selectedName);
+});
+async function main(option) {
   const me = await getData(path);
 
-  putData(path + "/" + me[0].id, me[0]).then((data) => {
-    console.log("put", data);
-  });
+  me.map((key) =>
+    option ? me.map((elem) => (elem.name == option ? elem : false)) : me[0]
+  );
+
+  me.map((key) => {});
   setInfo(me);
   setSkills(me);
 }
@@ -15,37 +20,10 @@ main();
 async function getData(url) {
   return fetch(url)
     .then((response) => response.json())
-    .then((data) =>
-      data
-        .map((member) =>
-          member.name == "Sjoerd"
-            ? {
-                id: member.id,
-                teamId: member.teamId,
-                name: member.name,
-                prefix: member.name,
-                surname: member.surname,
-                mugshot:
-                  "https://scontent-ams4-1.cdninstagram.com/v/t51.2885-15/e35/p1080x1080/64849546_465398650884939_2123255587850790776_n.jpg?_nc_ht=scontent-ams4-1.cdninstagram.com&_nc_cat=103&_nc_ohc=gPcUYcj7gU4AX8UWQ1I&tp=1&oh=430d622a4d8499a2103b5f9bdca770dc&oe=60424584",
-                githubHandle: "sreen020",
-                other: {
-                  skills: {
-                    html: 4,
-                    css: 4,
-                    js: 3,
-                  },
-                  bio:
-                    "Ik ben Sjoerd, 22 jaar oud en student CMD. Geboren en getogen in Amstedam-Noord. Eerder ben ik in Alkmaar werkzaam geweest als front-end developer.",
-                },
-              }
-            : false
-        )
-        .filter((item) => typeof item === "object")
-    );
+    .then((data) => data);
 }
 
 async function postData(url, data) {
-  console.log(data);
   const response = await fetch(url, {
     method: "POST",
     headers: {
